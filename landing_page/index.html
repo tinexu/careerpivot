@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Pivot Assistant - Your Personalized Path to Career Success</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">🚀 CareerPivot.ai</a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#demo" class="btn-primary">Try Free Demo</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-element" style="width: 60px; height: 60px; top: 20%; left: 10%; animation-delay: 0s;"></div>
+            <div class="floating-element" style="width: 40px; height: 40px; top: 60%; right: 15%; animation-delay: 2s;"></div>
+            <div class="floating-element" style="width: 80px; height: 80px; top: 80%; left: 70%; animation-delay: 4s;"></div>
+        </div>
+        <div class="container">
+            <h1>Your AI-Powered Career Transformation</h1>
+            <p class="subtitle">Navigate career transitions with confidence. Get personalized learning paths, market intelligence, and skill gap analysis powered by AI that understands your unique background.</p>
+            <div class="hero-cta">
+                <a href="#demo" class="btn-primary">Start Your Pivot Journey</a>
+                <a href="#features" class="btn-secondary">See How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">340%</span>
+                    <div class="stat-label">AI job growth this quarter</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50K+</span>
+                    <div class="stat-label">Jobs analyzed daily</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">73%</span>
+                    <div class="stat-label">Interview success rate</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15min</span>
+                    <div class="stat-label">Daily learning paths</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">How CareerPivot.ai Works</h2>
+            <p class="section-subtitle">Three powerful systems working together to accelerate your career transformation</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI Skill Gap Analysis</h3>
+                    <p>Upload your resume and target job descriptions. Our AI identifies transferable skills you didn't know you had and pinpoints exact gaps preventing you from landing your dream role.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Market Intelligence Engine</h3>
+                    <p>Real-time analysis of 50,000+ job postings daily across all industries. Track salary trends, emerging roles, and skill evolution before they become mainstream.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Personalized Learning Paths</h3>
+                    <p>15-minute daily learning modules tailored to your existing knowledge base. Strategic skill building that leverages what you already know.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Smart Job Feed</h3>
+                    <p>Save jobs you're interested in. Our AI learns your real preferences vs. stated ones, creating hyper-personalized recommendations that evolve with your goals.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Feedback Loops</h3>
+                    <p>Market trends inform your personal path. Your behavior improves market intelligence. Continuous optimization based on what actually leads to successful career transitions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Enterprise Analytics</h3>
+                    <p>B2B insights for HR teams: talent pipeline analysis, competitive intelligence, and workforce planning based on aggregated career transition patterns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <h2 class="section-title">Try the AI Analysis</h2>
+            <p class="section-subtitle">See how our AI identifies your transferable skills and career opportunities</p>
+            
+            <div class="demo-container">
+                <div class="demo-form">
+                    <div class="form-group">
+                        <label for="current-role">Current Role</label>
+                        <input type="text" id="current-role" placeholder="e.g., Marketing Manager">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="target-role">Target Role</label>
+                        <input type="text" id="target-role" placeholder="e.g., Product Manager">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Years of Experience</label>
+                        <select id="experience">
+                            <option value="">Select experience level</option>
+                            <option value="1-2">1-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5-10">5-10 years</option>
+                            <option value="10+">10+ years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="industry">Current Industry</label>
+                        <select id="industry">
+                            <option value="">Select industry</option>
+                            <option value="tech">Technology</option>
+                            <option value="finance">Finance</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="retail">Retail</option>
+                            <option value="consulting">Consulting</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="runAnalysis()" style="width: 100%; margin-top: 1rem;">Analyze Career Transition Path</button>
+                
+                <div class="results" id="results">
+                    <h3 style="margin-bottom: 1.5rem; color: #4ade80;">AI Analysis Results</h3>
+                    <div class="metric">
+                        <span class="metric-label">Skill Match Score</span>
+                        <span class="metric-value" id="skill-score">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Transferable Skills Identified</span>
+                        <span class="metric-value" id="transferable-skills">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Critical Skill Gaps</span>
+                        <span class="metric-value" id="skill-gaps">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Est. Transition Timeline</span>
+                        <span class="metric-value" id="timeline">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Interview Success Probability</span>
+                        <span class="metric-value" id="success-rate">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Choose Your Plan</h2>
+            <p class="section-subtitle">From individual career pivots to enterprise workforce intelligence</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Explorer</h3>
+                    <div class="price">Free</div>
+                    <ul class="pricing-features">
+                        <li>Basic skill gap analysis</li>
+                        <li>5 job saves per month</li>
+                        <li>Weekly market reports</li>
+                        <li>Community access</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Get Started</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Career Transformer</h3>
+                    <div class="price">$29<span style="font-size: 1rem;">/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Advanced AI analysis</li>
+                        <li>Unlimited job saves</li>
+                        <li>Personalized learning paths</li>
+                        <li>Real-time market alerts</li>
+                        <li>1-on-1 career coaching</li>
+                        <li>Interview preparation</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Start Transforming</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul class="pricing-features">
+                        <li>Workforce analytics</li>
+                        <li>Talent pipeline insights</li>
+                        <li>Competitive intelligence</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated support</li>
+                        <li>Team training programs</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Transform Your Career?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Join thousands of professionals who've successfully pivoted with AI-powered guidance</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#demo" class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Start Free Analysis</a>
+                <a href="mailto:founder@careerpivot.ai" class="btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">Contact Founder</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
