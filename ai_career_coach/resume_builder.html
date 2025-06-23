@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Builder - CareerPivot</title>
+    <link rel="stylesheet" href="resume_builder.css">
+</head>
+<body>
+    <div class="resume-builder-container">
+        <!-- Builder Panel -->
+        <div class="builder-panel">
+            <div class="panel-header">
+                <div class="panel-icon">📝</div>
+                <h1 class="panel-title">Resume Builder</h1>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>👤</span>
+                    Personal Information
+                </h2>
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone</label>
+                    <input type="tel" id="phone" class="form-input" placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="location">Location</label>
+                    <input type="text" id="location" class="form-input" placeholder="City, State">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="linkedin">LinkedIn</label>
+                    <input type="url" id="linkedin" class="form-input" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+            </div>
+
+            <!-- Professional Summary Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>📄</span>
+                    Professional Summary
+                    <button class="ai-enhance-button" onclick="enhanceWithAI('summary')">✨ AI Enhance</button>
+                </h2>
+                <div class="form-group">
+                    <label class="form-label" for="summary">Summary</label>
+                    <textarea id="summary" class="form-textarea" placeholder="Write a compelling professional summary that highlights your key achievements and skills..."></textarea>
+                </div>
+            </div>
+
+            <!-- Work Experience Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>💼</span>
+                    Work Experience
+                    <button class="add-button" onclick="addWorkExperience()">
+                        <span>+</span> Add Experience
+                    </button>
+                </h2>
+                <div id="workExperienceContainer">
+                    <!-- Dynamic work experience items will be added here -->
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>🎓</span>
+                    Education
+                    <button class="add-button" onclick="addEducation()">
+                        <span>+</span> Add Education
+                    </button>
+                </h2>
+                <div id="educationContainer">
+                    <!-- Dynamic education items will be added here -->
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>⚡</span>
+                    Skills
+                    <button class="ai-enhance-button" onclick="enhanceWithAI('skills')">✨ AI Optimize</button>
+                </h2>
+                <div class="form-group">
+                    <label class="form-label" for="skills">Skills (comma-separated)</label>
+                    <textarea id="skills" class="form-textarea" placeholder="JavaScript, Python, React, Project Management, Data Analysis..."></textarea>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <span>🚀</span>
+                    Projects
+                    <button class="add-button" onclick="addProject()">
+                        <span>+</span> Add Project
+                    </button>
+                </h2>
+                <div id="projectsContainer">
+                    <!-- Dynamic project items will be added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Panel -->
+        <div class="preview-panel">
+            <div class="panel-header">
+                <div class="panel-icon">👁️</div>
+                <h1 class="panel-title">Live Preview</h1>
+            </div>
+
+            <div class="download-buttons">
+                <button class="download-button" onclick="downloadPDF()">📄 Download PDF</button>
+                <button class="download-button" onclick="downloadWord()">📝 Download Word</button>
+                <button class="ai-enhance-button" onclick="analyzeResume()">🤖 AI Analysis</button>
+            </div>
+
+            <div class="resume-preview" id="resumePreview">
+                <!-- Resume preview will be generated here -->
+                <div class="resume-header">
+                    <div class="resume-name" id="previewName">Your Name</div>
+                    <div class="resume-contact" id="previewContact">
+                        <span id="previewEmail">email@example.com</span> | 
+                        <span id="previewPhone">(555) 123-4567</span> | 
+                        <span id="previewLocation">City, State</span>
+                        <br>
+                        <span id="previewLinkedIn">LinkedIn Profile</span>
+                    </div>
+                </div>
+
+                <div class="resume-section" id="summarySection">
+                    <div class="resume-section-title">PROFESSIONAL SUMMARY</div>
+                    <div id="previewSummary">Your professional summary will appear here...</div>
+                </div>
+
+                <div class="resume-section" id="experienceSection">
+                    <div class="resume-section-title">WORK EXPERIENCE</div>
+                    <div id="previewExperience">Your work experience will appear here...</div>
+                </div>
+
+                <div class="resume-section" id="educationSection">
+                    <div class="resume-section-title">EDUCATION</div>
+                    <div id="previewEducation">Your education will appear here...</div>
+                </div>
+
+                <div class="resume-section" id="skillsSection">
+                    <div class="resume-section-title">SKILLS</div>
+                    <div id="previewSkills">Your skills will appear here...</div>
+                </div>
+
+                <div class="resume-section" id="projectsSection">
+                    <div class="resume-section-title">PROJECTS</div>
+                    <div id="previewProjects">Your projects will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Analysis Modal -->
+    <div id="aiAnalysisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🤖 AI Resume Analysis</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="analysisContent">
+                    <div class="loading-spinner">Analyzing your resume...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="resume_builder.js"></script>
+</body>
+</html>

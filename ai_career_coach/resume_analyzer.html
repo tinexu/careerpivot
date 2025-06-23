@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Career Coach - CareerPivot</title>
+    <link rel="stylesheet" href="ai_career_coach.css">
+    <link rel="stylesheet" href="gap_analyzer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="coach-container">
+        <!-- Header -->
+        <header class="coach-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="../dashboard/dashboard.html" class="nav-back">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5" />
+                            <path d="M12 19l-7-7 7-7" />
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                    <a href="../landing_page/index.html" class="logo">CareerPivot</a>
+                    <div class="page-title">AI Career Coach</div>
+                </div>
+                <div class="header-right">
+                    <div class="ai-status">
+                        <div class="pulse"></div>
+                        AI Assistant Online
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="coach-main">
+            <!-- Coach Navigation -->
+            <div class="coach-nav">
+                <button class="coach-nav-item" data-section="chat">💬 AI Coach Chat</button>
+                <button class="coach-nav-item active" data-section="gap-analyzer">🎯 Career Gap Analyzer</button>
+                <button class="coach-nav-item" data-section="resume">📄 Resume Builder</button>
+                <button class="coach-nav-item" data-section="interview">🎯 Interview Prep</button>
+                <button class="coach-nav-item" data-section="career">🚀 Career Path</button>
+            </div>
+
+            <!-- Career Gap Analyzer Section -->
+            <div class="content-section active" id="gap-analyzer-section">
+                <div class="gap-analyzer">
+                    <!-- Step 1: Current Skills Analysis -->
+                    <div class="analyzer-step" id="step-1">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-info">
+                                <h2 class="step-title">📊 Current Skills Analysis</h2>
+                                <p class="step-description">We'll analyze your resume to identify your current skills and experience</p>
+                            </div>
+                        </div>
+
+                        <div class="analysis-card">
+                            <div class="card-header">
+                                <h3 class="card-title">Resume Analysis</h3>
+                                <button class="analyze-btn" onclick="analyzeCurrentSkills()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="M21 21l-4.35-4.35"></path>
+                                    </svg>
+                                    Analyze My Resume
+                                </button>
+                            </div>
+
+                            <div class="resume-status" id="resumeStatus">
+                                <div class="status-message">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14,2 14,8 20,8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10,9 9,9 8,9"></polyline>
+                                    </svg>
+                                    Click "Analyze My Resume" to extract your current skills from the Resume Builder
+                                </div>
+                            </div>
+
+                            <div class="skills-analysis hidden" id="skillsAnalysis">
+                                <div class="analysis-grid">
+                                    <div class="skill-category">
+                                        <h4 class="category-title">🛠️ Technical Skills</h4>
+                                        <div class="skill-tags" id="technicalSkills"></div>
+                                    </div>
+                                    
+                                    <div class="skill-category">
+                                        <h4 class="category-title">💼 Professional Skills</h4>
+                                        <div class="skill-tags" id="professionalSkills"></div>
+                                    </div>
+                                    
+                                    <div class="skill-category">
+                                        <h4 class="category-title">🏢 Industry Experience</h4>
+                                        <div class="skill-tags" id="industryExperience"></div>
+                                    </div>
+                                    
+                                    <div class="skill-category">
+                                        <h4 class="category-title">📈 Experience Level</h4>
+                                        <div class="experience-summary" id="experienceSummary"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Target Job Selection -->
+                    <div class="analyzer-step" id="step-2">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-info">
+                                <h2 class="step-title">🎯 Target Job Analysis</h2>
+                                <p class="step-description">Define your target role to identify required skills and qualifications</p>
+                            </div>
+                        </div>
+
+                        <div class="target-selection">
+                            <div class="selection-tabs">
+                                <button class="tab-btn active" data-tab="specific-job">Specific Job</button>
+                                <button class="tab-btn" data-tab="industry-trends">Industry Analysis</button>
+                            </div>
+
+                            <!-- Specific Job Tab -->
+                            <div class="tab-content active" id="specific-job">
+                                <div class="job-input-section">
+                                    <div class="input-group">
+                                        <label class="input-label">Target Job Title</label>
+                                        <input type="text" class="job-input" id="targetJobTitle" placeholder="e.g., Senior Software Engineer, Product Manager">
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Company/Industry (Optional)</label>
+                                        <input type="text" class="job-input" id="targetCompany" placeholder="e.g., Tech startup, Financial services">
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <label class="input-label">Job Description (Optional)</label>
+                                        <textarea class="job-textarea" id="jobDescription" rows="6" placeholder="Paste the job description here for detailed analysis..."></textarea>
+                                    </div>
+
+                                    <button class="analyze-job-btn" onclick="analyzeTargetJob()">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                                        </svg>
+                                        Analyze Target Job
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Industry Trends Tab -->
+                            <div class="tab-content" id="industry-trends">
+                                <div class="industry-selection">
+                                    <h3 class="selection-title">Select Your Target Industry</h3>
+                                    <div class="industry-grid">
+                                        <button class="industry-card" data-industry="technology">
+                                            <div class="industry-icon">💻</div>
+                                            <div class="industry-name">Technology</div>
+                                        </button>
+                                        <button class="industry-card" data-industry="finance">
+                                            <div class="industry-icon">💰</div>
+                                            <div class="industry-name">Finance</div>
+                                        </button>
+                                        <button class="industry-card" data-industry="healthcare">
+                                            <div class="industry-icon">🏥</div>
+                                            <div class="industry-name">Healthcare</div>
+                                        </button>
+                                        <button class="industry-card" data-industry="marketing">
+                                            <div class="industry-icon">📈</div>
+                                            <div class="industry-name">Marketing</div>
+                                        </button>
+                                        <button class="industry-card" data-industry="education">
+                                            <div class="industry-icon">🎓</div>
+                                            <div class="industry-name">Education</div>
+                                        </button>
+                                        <button class="industry-card" data-industry="consulting">
+                                            <div class="industry-icon">🤝</div>
+                                            <div class="industry-name">Consulting</div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Target Job Results -->
+                        <div class="target-analysis hidden" id="targetAnalysis">
+                            <div class="analysis-results">
+                                <h3 class="results-title">📋 Required Skills Analysis</h3>
+                                <div class="requirements-grid">
+                                    <div class="requirement-category">
+                                        <h4 class="req-title">Must-Have Skills</h4>
+                                        <div class="requirement-tags" id="mustHaveSkills"></div>
+                                    </div>
+                                    <div class="requirement-category">
+                                        <h4 class="req-title">Nice-to-Have Skills</h4>
+                                        <div class="requirement-tags" id="niceToHaveSkills"></div>
+                                    </div>
+                                    <div class="requirement-category">
+                                        <h4 class="req-title">Experience Requirements</h4>
+                                        <div class="requirement-text" id="experienceReqs"></div>
+                                    </div>
+                                    <div class="requirement-category">
+                                        <h4 class="req-title">Key Responsibilities</h4>
+                                        <div class="requirement-text" id="keyResponsibilities"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Gap Analysis -->
+                    <div class="analyzer-step" id="step-3">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-info">
+                                <h2 class="step-title">📊 Skills Gap Analysis</h2>
+                                <p class="step-description">Compare your current skills with target requirements</p>
+                            </div>
+                        </div>
+
+                        <div class="gap-analysis hidden" id="gapAnalysis">
+                            <div class="gap-overview">
+                                <div class="match-score">
+                                    <div class="score-circle">
+                                        <div class="score-value" id="matchScore">0%</div>
+                                        <div class="score-label">Match Score</div>
+                                    </div>
+                                    <div class="score-breakdown">
+                                        <div class="breakdown-item">
+                                            <span class="breakdown-label">Skills Match:</span>
+                                            <span class="breakdown-value" id="skillsMatch">0/0</span>
+                                        </div>
+                                        <div class="breakdown-item">
+                                            <span class="breakdown-label">Experience Level:</span>
+                                            <span class="breakdown-value" id="experienceMatch">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gap-categories">
+                                <div class="gap-category strengths">
+                                    <div class="category-header">
+                                        <h3 class="category-title">✅ Your Strengths</h3>
+                                        <span class="category-count" id="strengthsCount">0</span>
+                                    </div>
+                                    <div class="gap-items" id="strengthsList"></div>
+                                </div>
+
+                                <div class="gap-category gaps">
+                                    <div class="category-header">
+                                        <h3 class="category-title">⚠️ Skills to Develop</h3>
+                                        <span class="category-count" id="gapsCount">0</span>
+                                    </div>
+                                    <div class="gap-items" id="gapsList"></div>
+                                </div>
+
+                                <div class="gap-category missing">
+                                    <div class="category-header">
+                                        <h3 class="category-title">❌ Missing Skills</h3>
+                                        <span class="category-count" id="missingCount">0</span>
+                                    </div>
+                                    <div class="gap-items" id="missingList"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Recommendations -->
+                    <div class="analyzer-step" id="step-4">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-info">
+                                <h2 class="step-title">🚀 Personalized Recommendations</h2>
+                                <p class="step-description">Actionable steps and projects to bridge your skills gaps</p>
+                            </div>
+                        </div>
+
+                        <div class="recommendations hidden" id="recommendations">
+                            <!-- Learning Path -->
+                            <div class="recommendation-section">
+                                <h3 class="rec-section-title">📚 Learning Path</h3>
+                                <div class="learning-timeline" id="learningTimeline">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Project Recommendations -->
+                            <div class="recommendation-section">
+                                <h3 class="rec-section-title">🛠️ Recommended Projects</h3>
+                                <div class="projects-grid" id="projectsGrid">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Quick Wins -->
+                            <div class="recommendation-section">
+                                <h3 class="rec-section-title">⚡ Quick Wins (30 days)</h3>
+                                <div class="quick-wins-list" id="quickWinsList">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Long-term Goals -->
+                            <div class="recommendation-section">
+                                <h3 class="rec-section-title">🎯 Long-term Goals (3-6 months)</h3>
+                                <div class="longterm-goals" id="longtermGoals">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Action Plan Export -->
+                            <div class="action-plan-export">
+                                <button class="export-btn" onclick="exportActionPlan()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7,10 12,15 17,10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Export Action Plan
+                                </button>
+                                <button class="save-plan-btn" onclick="saveDevelopmentPlan()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                        <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                                        <polyline points="7,3 7,8 15,8"></polyline>
+                                    </svg>
+                                    Save Development Plan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="progress-indicator">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">1</div>
+                            <div class="progress-step" data-step="2">2</div>
+                            <div class="progress-step" data-step="3">3</div>
+                            <div class="progress-step" data-step="4">4</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other sections placeholders -->
+            <div class="content-section" id="chat-section">
+                <div class="coming-soon">
+                    <h2>💬 AI Coach Chat</h2>
+                    <p>Coming soon...</p>
+                </div>
+            </div>
+
+            <div class="content-section" id="resume-section">
+                <div class="coming-soon">
+                    <h2>📄 Resume Builder</h2>
+                    <p>Coming soon...</p>
+                </div>
+            </div>
+
+            <div class="content-section" id="interview-section">
+                <div class="coming-soon">
+                    <h2>🎯 Interview Prep</h2>
+                    <p>Coming soon...</p>
+                </div>
+            </div>
+
+            <div class="content-section" id="career-section">
+                <div class="coming-soon">
+                    <h2>🚀 Career Path</h2>
+                    <p>Coming soon...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../login_and_signup/auth.js"></script>
+    <script src="ai_career_coach.js"></script>
+    <script src="resume_analyzer.js"></script>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const navItems = document.querySelectorAll('.coach-nav-item');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const section = this.getAttribute('data-section');
+
+                    // Remove active from all nav items
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    // Add active to clicked nav
+                    this.classList.add('active');
+
+                    // Hide all content sections
+                    document.querySelectorAll('.content-section').forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    // Show selected section
+                    const targetSection = document.getElementById(section + '-section');
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+                });
+            });
+
+            // Tab functionality for target job selection
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // Remove active from all tabs
+                    tabBtns.forEach(tab => tab.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(tabName).classList.add('active');
+                });
+            });
+
+            // Industry card selection
+            const industryCards = document.querySelectorAll('.industry-card');
+            industryCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    // Remove active from all cards
+                    industryCards.forEach(c => c.classList.remove('active'));
+                    // Add active to clicked card
+                    this.classList.add('active');
+                    
+                    // Trigger industry analysis
+                    const industry = this.getAttribute('data-industry');
+                    analyzeIndustryTrends(industry);
+                });
+            });
+        });
+
+        // Placeholder functions (will be implemented in gap_analyzer.js)
+        function analyzeCurrentSkills() {
+            console.log('Analyzing current skills...');
+        }
+
+        function analyzeTargetJob() {
+            console.log('Analyzing target job...');
+        }
+
+        function analyzeIndustryTrends(industry) {
+            console.log('Analyzing industry trends for:', industry);
+        }
+
+        function exportActionPlan() {
+            console.log('Exporting action plan...');
+        }
+
+        function saveDevelopmentPlan() {
+            console.log('Saving development plan...');
+        }
+    </script>
+</body>
+</html>

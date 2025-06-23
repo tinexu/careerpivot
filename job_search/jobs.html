@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search - CareerPivot</title>
+    <link rel="stylesheet" href="job_styles.css">
+    <style>
+        /* Temporary inline CSS for testing */
+        body { 
+            background: #000000 !important; 
+            color: #ffffff !important; 
+            font-family: 'Satoshi', sans-serif !important;
+        }
+        .jobs-header { 
+            background: rgba(0, 0, 0, 0.95) !important; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="jobs-container">
+        <!-- Header -->
+        <header class="jobs-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="../landing_page/index.html" class="logo">CareerPivot</a>
+                    <nav class="main-nav">
+                        <a href="../dashboard/dashboard.html" class="nav-link">Dashboard</a>
+                        <a href="#" class="nav-link active">Job Search</a>
+                        <a href="#" class="nav-link">AI Analysis</a>
+                        <a href="#" class="nav-link">Market Insights</a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="search-stats">
+                        <span id="jobCount">2,847</span> jobs found
+                    </div>
+                    <div class="user-menu">
+                        <button class="user-avatar">
+                            <span id="userInitials">DU</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="jobs-main">
+            <!-- Search and Filters Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <div class="search-header">
+                        <h1>Find Your Next Career Move</h1>
+                        <p>AI-powered job search with personalized matching</p>
+                    </div>
+                    
+                    <div class="search-form">
+                        <div class="search-row">
+                            <div class="search-input-group">
+                                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                                <input 
+                                    type="text" 
+                                    id="jobTitle" 
+                                    placeholder="Job title, keywords, or company"
+                                    class="search-input"
+                                >
+                            </div>
+                            <div class="search-input-group">
+                                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <input 
+                                    type="text" 
+                                    id="location" 
+                                    placeholder="Location or Remote"
+                                    class="search-input"
+                                >
+                            </div>
+                            <button class="search-btn" onclick="searchJobs()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filters -->
+                    <div class="filters-container">
+                        <button class="filters-toggle" onclick="toggleFilters()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+                            </svg>
+                            Filters
+                            <span class="filter-count" id="filterCount">0</span>
+                        </button>
+                        
+                        <div class="filters-panel" id="filtersPanel">
+                            <div class="filters-grid">
+                                <div class="filter-group">
+                                    <label>Experience Level</label>
+                                    <select id="experienceFilter" onchange="updateFilters()">
+                                        <option value="">All levels</option>
+                                        <option value="entry">Entry Level (0-2 years)</option>
+                                        <option value="mid">Mid Level (3-5 years)</option>
+                                        <option value="senior">Senior Level (5-10 years)</option>
+                                        <option value="executive">Executive (10+ years)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Salary Range</label>
+                                    <select id="salaryFilter" onchange="updateFilters()">
+                                        <option value="">Any salary</option>
+                                        <option value="0-50k">$0 - $50k</option>
+                                        <option value="50k-75k">$50k - $75k</option>
+                                        <option value="75k-100k">$75k - $100k</option>
+                                        <option value="100k-150k">$100k - $150k</option>
+                                        <option value="150k+">$150k+</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Job Type</label>
+                                    <select id="jobTypeFilter" onchange="updateFilters()">
+                                        <option value="">All types</option>
+                                        <option value="full-time">Full-time</option>
+                                        <option value="part-time">Part-time</option>
+                                        <option value="contract">Contract</option>
+                                        <option value="remote">Remote</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Company Size</label>
+                                    <select id="companySizeFilter" onchange="updateFilters()">
+                                        <option value="">Any size</option>
+                                        <option value="startup">Startup (1-50)</option>
+                                        <option value="small">Small (50-200)</option>
+                                        <option value="medium">Medium (200-1000)</option>
+                                        <option value="large">Large (1000+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="filters-actions">
+                                <button class="clear-filters" onclick="clearFilters()">Clear All</button>
+                                <button class="apply-filters" onclick="applyFilters()">Apply Filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Jobs List -->
+                <section class="jobs-section">
+                    <div class="section-header">
+                        <div class="results-info">
+                            <h2>Recommended Jobs</h2>
+                            <div class="sort-options">
+                                <label>Sort by:</label>
+                                <select id="sortBy" onchange="sortJobs()">
+                                    <option value="relevance">Relevance</option>
+                                    <option value="match">AI Match Score</option>
+                                    <option value="date">Date Posted</option>
+                                    <option value="salary">Salary</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobs-list" id="jobsList">
+                        <!-- Job cards will be populated by JavaScript -->
+                    </div>
+
+                    <div class="load-more">
+                        <button class="load-more-btn" onclick="loadMoreJobs()">
+                            Load More Jobs
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Market Insights Sidebar -->
+                <aside class="insights-sidebar">
+                    <div class="insights-card">
+                        <h3>Market Insights</h3>
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <span class="insight-title">Trending Skills</span>
+                                <span class="insight-trend">↗ 23%</span>
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag hot">Python</span>
+                                <span class="skill-tag hot">React</span>
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">AWS</span>
+                            </div>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <span class="insight-title">Salary Trends</span>
+                                <span class="insight-trend">↗ $12k</span>
+                            </div>
+                            <div class="salary-chart">
+                                <div class="chart-bar" style="height: 40%"></div>
+                                <div class="chart-bar" style="height: 60%"></div>
+                                <div class="chart-bar" style="height: 80%"></div>
+                                <div class="chart-bar" style="height: 100%"></div>
+                            </div>
+                            <p class="insight-desc">Average salary increased 15% this year</p>
+                        </div>
+                        
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <span class="insight-title">Top Hiring Companies</span>
+                            </div>
+                            <div class="company-list">
+                                <div class="company-item">
+                                    <span class="company-name">Google</span>
+                                    <span class="job-count">47 jobs</span>
+                                </div>
+                                <div class="company-item">
+                                    <span class="company-name">Microsoft</span>
+                                    <span class="job-count">32 jobs</span>
+                                </div>
+                                <div class="company-item">
+                                    <span class="company-name">Amazon</span>
+                                    <span class="job-count">28 jobs</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insights-card">
+                        <h3>Your Profile Match</h3>
+                        <div class="match-score">
+                            <div class="score-circle">
+                                <span class="score-number">78%</span>
+                            </div>
+                            <p>Average match score for current search</p>
+                        </div>
+                        
+                        <div class="recommendations">
+                            <h4>Boost Your Score</h4>
+                            <div class="recommendation-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 11l3 3 8-8"/>
+                                </svg>
+                                Learn React (+15% match)
+                            </div>
+                            <div class="recommendation-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 11l3 3 8-8"/>
+                                </svg>
+                                Add AWS certification (+12% match)
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <script src="../login_and_signup/auth.js"></script>
+    <script src="config.js"></script>
+    <script src="jobs.js"></script>
+</body>
+</html>
