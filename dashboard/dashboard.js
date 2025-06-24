@@ -403,7 +403,7 @@ function handleLogout() {
     if (window.auth) {
         window.auth.logout();
     } else {
-        window.location.href = '../landing_page/index.html';
+        window.location.href = '../index.html';
     }
 }
 
