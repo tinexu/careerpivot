@@ -94,45 +94,38 @@ class AICareerCoach {
         const chatInput = document.getElementById('chatInput');
         const chatMessages = document.getElementById('chatMessages');
         const message = chatInput.value.trim();
-        
-        console.log('Sending message:', message);
-        
+    
         if (!message) return;
-        
-        // Add user message
+    
         this.addMessage(message, 'user');
         chatInput.value = '';
-        
-        // Show typing indicator
         this.showTypingIndicator();
-        
+    
         try {
-            // Call your backend API
             const response = await fetch('http://localhost:3001/api/chat', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message })
             });
     
+            if (!response.ok) throw new Error('Gemini API error');
+    
             const data = await response.json();
-            
             this.hideTypingIndicator();
-            
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                const aiResponse = data.candidates[0].content.parts[0].text;
+    
+            const aiResponse = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (aiResponse) {
                 this.addMessage(aiResponse, 'ai');
             } else {
-                this.addMessage('Sorry, I encountered an error. Please try again.', 'ai');
+                throw new Error('No valid AI response');
             }
-            
         } catch (error) {
-            console.error('API Error:', error);
+            console.warn('Falling back to heuristic AI:', error);
             this.hideTypingIndicator();
-            this.addMessage('Sorry, I cannot connect to the AI right now. Please make sure the backend server is running.', 'ai');
+            const fallback = this.generateAIResponse(message);
+            this.addMessage(fallback, 'ai');
         }
-    }
+    }    
     
     showTypingIndicator() {
         const chatMessages = document.getElementById('chatMessages');
@@ -783,6 +776,53 @@ async function loadGapAnalyzer() {
         }
     }
 }
+
+// === Skill Gap Analyzer ===
+async function analyzeSkillGap() {
+    const resumeSkillsInput = document.getElementById('resumeSkillsInput');
+    const targetSkillsInput = document.getElementById('targetSkillsInput');
+    const outputEl = document.getElementById('skillGapResults');
+  
+    const resumeSkills = resumeSkillsInput.value.split(',').map(s => s.trim());
+    const targetSkills = targetSkillsInput.value.split(',').map(s => s.trim());
+  
+    if (!resumeSkills.length || !targetSkills.length) {
+      outputEl.innerHTML = `<p class="error">Please enter both resume and target job skills.</p>`;
+      return;
+    }
+  
+    outputEl.innerHTML = `<p>Analyzing...</p>`;
+  
+    try {
+      const response = await fetch('/api/skill-gap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resumeSkills, targetSkills })
+      });
+  
+      if (!response.ok) throw new Error("Server returned error");
+  
+      const result = await response.json();
+  
+      const missing = result.missingSkills?.length
+        ? `<ul>${result.missingSkills.map(skill => `<li>🔍 ${skill}</li>`).join('')}</ul>`
+        : `<p>No missing skills detected ✅</p>`;
+  
+      const recommendations = result.recommendations?.length
+        ? `<ul>${result.recommendations.map(rec => `<li>📌 ${rec}</li>`).join('')}</ul>`
+        : `<p>No recommendations available.</p>`;
+  
+      outputEl.innerHTML = `
+        <h4>Missing Skills</h4>
+        ${missing}
+        <h4>Recommendations</h4>
+        ${recommendations}
+      `;
+    } catch (err) {
+      console.error("Skill gap fetch error:", err);
+      outputEl.innerHTML = `<p class="error">Error analyzing skill gap. Try again later.</p>`;
+    }
+  }  
 
 // Update your showSection function or add this
 function showGapAnalyzer() {

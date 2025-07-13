@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planner - CareerPivot</title>
+  <link rel="stylesheet" href="../dashboard/dashboard_styles.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div class="header-left">
+          <a href="../index.html" class="logo">CareerPivot</a>
+          <nav class="main-nav">
+            <a href="../dashboard/dashboard.html" class="nav-link">Overview</a>
+            <a href="../ai_career_coach/ai_career_coach.html" class="nav-link">AI Analysis</a>
+            <a href="../job_search/jobs.html" class="nav-link">Job Feed</a>
+            <a href="../market_insights/insights.html" class="nav-link">Market Insights</a>
+            <a href="planner.html" class="nav-link active">Planner</a>
+          </nav>
+        </div>
+        <div class="header-right">
+          <button class="notification-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+          <div class="user-menu">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <span id="userInitials">DU</span>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+              <div class="user-info">
+                <div class="user-name" id="userName">Demo User</div>
+                <div class="user-email" id="userEmail">demo@careerpivot.ai</div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="../profile/profile.html" class="dropdown-item">View Profile</a>
+              <a href="#" class="dropdown-item">Profile Settings</a>
+              <a href="#" class="dropdown-item">Preferences</a>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item logout-btn" onclick="handleLogout()">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <section class="dashboard-card full-width">
+        <div class="card-header">
+          <h3 class="card-title">Your Weekly Plan</h3>
+          <button class="card-action" onclick="generatePlanFromAI()">Generate Plan</button>
+        </div>
+        <div class="card-content">
+          <div id="weeklyPlan" class="planner-grid">
+            <div class="planner-day-card">
+              <h4>Monday</h4>
+              <ul class="task-list" id="Monday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Tuesday</h4>
+              <ul class="task-list" id="Tuesday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Wednesday</h4>
+              <ul class="task-list" id="Wednesday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Thursday</h4>
+              <ul class="task-list" id="Thursday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Friday</h4>
+              <ul class="task-list" id="Friday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Saturday</h4>
+              <ul class="task-list" id="Saturday"></ul>
+            </div>
+            <div class="planner-day-card">
+              <h4>Sunday</h4>
+              <ul class="task-list" id="Sunday"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../login_and_signup/auth.js"></script>
+  <script src="planner.js"></script>
+</body>
+
+</html>

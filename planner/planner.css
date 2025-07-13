@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 20px;
+  }
+  
+  #planner-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .day-column {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 300px;
+  }
+  
+  .task-block {
+    background: #fff;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-left: 5px solid #999;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+  
+  .task-block.high { border-color: #e53935; }
+  .task-block.medium { border-color: #f9a825; }
+  .task-block.low { border-color: #43a047; }  

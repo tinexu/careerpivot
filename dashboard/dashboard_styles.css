@@ -561,21 +561,21 @@ body {
     .header-left {
         gap: 32px;
     }
-    
+
     .main-nav {
         gap: 24px;
     }
-    
+
     .dashboard-main {
         padding: 24px 20px;
     }
-    
+
     .welcome-section {
         flex-direction: column;
         align-items: flex-start;
         gap: 24px;
     }
-    
+
     .quick-actions {
         width: 100%;
         justify-content: flex-start;
@@ -587,41 +587,41 @@ body {
         padding: 0 20px;
         height: 64px;
     }
-    
+
     .header-left {
         gap: 24px;
     }
-    
+
     .main-nav {
         display: none;
     }
-    
+
     .dashboard-main {
         padding: 20px 16px;
     }
-    
+
     .welcome-title {
         font-size: 24px;
     }
-    
+
     .stats-overview {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
-    
+
     .dashboard-grid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .quick-actions {
         flex-direction: column;
     }
-    
+
     .action-btn {
         justify-content: center;
     }
-    
+
     .insights-grid {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -632,31 +632,31 @@ body {
     .header-content {
         padding: 0 16px;
     }
-    
+
     .dashboard-main {
         padding: 16px 12px;
     }
-    
+
     .welcome-section {
         padding: 20px;
     }
-    
+
     .stats-overview {
         grid-template-columns: 1fr;
     }
-    
+
     .dashboard-card {
         padding: 20px;
     }
-    
+
     .stat-card {
         padding: 20px;
     }
-    
+
     .welcome-title {
         font-size: 20px;
     }
-    
+
     .stat-number {
         font-size: 24px;
     }
@@ -668,6 +668,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -680,9 +681,17 @@ body {
     animation: fadeInUp 0.6s ease-out;
 }
 
-.dashboard-card:nth-child(1) { animation-delay: 0.1s; }
-.dashboard-card:nth-child(2) { animation-delay: 0.2s; }
-.dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+.dashboard-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.dashboard-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dashboard-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
@@ -701,3 +710,127 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(231, 121, 249, 0.5);
 }
+
+.planner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    padding-top: 1rem;
+}
+
+.planner-day-card {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.planner-day-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.25rem;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    background: #2b2b2b;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    margin-top: 0.3rem;
+    transform: scale(1.2);
+  }
+
+  /* Style the checkbox appearance */
+.checkbox-label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #c084fc; /* light purple border */
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Checked state */
+  .checkbox-label input[type="checkbox"]:checked {
+    background-color: #c084fc; /* matching purple fill */
+    border-color: #c084fc;
+  }
+  
+  /* Checkmark */
+  .checkbox-label input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    opacity: 0;
+    transform: rotate(45deg);
+    transition: opacity 0.2s ease;
+  }
+  
+  /* Show checkmark when checked */
+  .checkbox-label input[type="checkbox"]:checked::after {
+    opacity: 1;
+  }
+  
+  .checkbox-label span {
+    margin-left: 0.5rem;
+    display: inline-block;
+  }  
+
+  .task-block.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+  }  
+
+  .task-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .task-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #c084fc;
+    padding: 0;
+  }
+  
+  .task-actions svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s;
+  }
+  
+  .task-actions button:hover svg {
+    transform: scale(1.1);
+  }  

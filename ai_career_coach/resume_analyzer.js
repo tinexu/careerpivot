@@ -281,79 +281,54 @@ class CareerGapAnalyzer {
         ).join('');
     }
 
-    analyzeTargetJob() {
+    renderSkillList(skills) {
+        const container = document.getElementById("skillsOutput");
+        if (!container) return;
+      
+        container.innerHTML = skills.map(skill => `
+          <div class="skill-pill">
+            <svg class="icon-check" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="currentColor" d="M20.285 6.708l-11.25 11.25-5.535-5.536 1.415-1.414 4.12 4.12 9.835-9.836z"/>
+            </svg>
+            ${skill}
+          </div>
+        `).join('');
+    }      
+
+    async analyzeTargetJob() {
         console.log("🚀 analyzeTargetJob triggered");
 
-        const jobTitle = document.getElementById('targetJobTitle')?.value.trim();
-        const company = document.getElementById('targetCompany')?.value.trim();
-        const jobDescription = document.getElementById('jobDescription')?.value.trim();
-        const skillsInput = document.getElementById('skills');
-
-        if (!jobTitle) {
-            this.showNotification('Please enter a target job title', 'warning');
-            return;
+        const mustHave = document.getElementById("mustHaveSkills");
+        if (!mustHave || mustHave.innerText.trim() === "") {
+            console.warn("🟡 Injecting fallback #mustHaveSkills manually");
+            mustHave.innerText = `
+  - JavaScript
+  - React
+  - REST APIs
+  - Node.js
+  `;
         }
 
-        if (!skillsInput) {
-            console.error("❌ #skills textarea not found in DOM.");
-            return;
+
+        try {
+            const mustHaveEl = await waitForElementWithText('#mustHaveSkills', 4000);
+            const text = mustHaveEl.innerText.trim();
+
+            const skillLines = text.split('\n').filter(line => line.trim().length > 0);
+            console.log("✅ Parsed skills:", skillLines);
+
+            this.currentSkills = skillLines;
+            const skillText = document.getElementById("mustHaveSkills").innerText;
+            const skills = skillText
+                .split('\n')
+                .map(s => s.replace(/^-/, '').trim())
+                .filter(Boolean);
+
+            this.renderSkillList(skills);
+
+        } catch (err) {
+            console.error(err);
         }
-
-        const skillText = skillsInput.value.trim();
-        const allSkills = skillText
-            .split(',')
-            .map(s => s.trim().toLowerCase())
-            .filter(Boolean);
-
-        const technicalKeywords = ['javascript', 'python', 'java', 'c++', 'git', 'react', 'node.js', 'sql', 'docker', 'aws'];
-        const professionalKeywords = ['communication', 'teamwork', 'leadership', 'time management', 'adaptability'];
-
-        this.currentSkills = {
-            technical: allSkills.filter(skill => technicalKeywords.includes(skill)),
-            professional: allSkills.filter(skill => professionalKeywords.includes(skill))
-        };
-
-        console.log("✅ currentSkills set:", this.currentSkills);
-
-        // ✅ Force visibility of target analysis section BEFORE rendering any tags
-        const targetAnalysis = document.getElementById('targetAnalysis');
-        if (targetAnalysis) {
-            targetAnalysis.classList.remove('hidden');
-            targetAnalysis.style.display = 'block'; // <-- Ensure it's rendered
-        }
-
-        const gapAnalyzerSection = document.getElementById('gap-analyzer-section');
-        const specificJobTab = document.getElementById('specific-job');
-        if (gapAnalyzerSection) gapAnalyzerSection.classList.add('active');
-        if (specificJobTab) specificJobTab.classList.add('active');
-
-
-        this.showAnalysisLoading('targetAnalysis');
-
-        setTimeout(() => {
-            const requirements = this.analyzeJobRequirements(jobTitle, company, jobDescription);
-            this.targetRequirements = requirements;
-
-            // ✅ Ensure layout is painted before checking for the element
-            requestAnimationFrame(() => {
-                // Force visibility first
-                const targetAnalysis = document.getElementById('targetAnalysis');
-                if (targetAnalysis) {
-                    targetAnalysis.classList.remove('hidden');
-                    targetAnalysis.style.display = 'block';
-                }
-
-                // Now wait for DOM to reflow before running logic
-                setTimeout(() => {
-                    waitForElement("mustHaveSkills", () => {
-                        this.displayTargetRequirements(requirements);
-                        this.performGapAnalysis();
-                        this.updateStep(3);
-                    });
-                }, 50); // Small delay to allow rendering
-
-            });
-        }, 1000);
     }
 
     analyzeJobRequirements(jobTitle, company, jobDescription) {
@@ -382,6 +357,80 @@ class CareerGapAnalyzer {
 
         return requirements;
     }
+
+    async generateSkillRecommendations() {
+        console.log("🚀 generateSkillRecommendations triggered");
+      
+        const mustHaveEl = document.getElementById("mustHaveSkills");
+        if (!mustHaveEl) {
+          console.warn("⚠️ No #mustHaveSkills element found.");
+          return;
+        }
+      
+        const mustHaveText = mustHaveEl.innerText;
+        console.log("📋 mustHaveSkills text:", mustHaveText);
+      
+        const jobSkills = mustHaveText
+          .split('\n')
+          .map(s => s.replace(/^-/, '').trim().toLowerCase())
+          .filter(Boolean);
+      
+        const currentSkills = (this.currentSkills || []).map(s => s.toLowerCase());
+        const missingSkills = jobSkills.filter(skill => !currentSkills.includes(skill));
+        console.log("🔍 Missing skills:", missingSkills);
+      
+        const output = document.getElementById("recommendationsOutput");
+        if (!output) {
+          console.warn("⚠️ No #recommendationsOutput element found.");
+          return;
+        }
+      
+        if (missingSkills.length === 0) {
+          output.innerHTML = "<p>🎉 You already meet all the required skills!</p>";
+          return;
+        }
+      
+        const prompt = `You're an AI career coach. For the following missing skills:\n\n${missingSkills.join('\n')}\n\nGive concise, practical steps or resources (like project ideas, free courses, etc.) to learn each one.`;
+        console.log("📝 Prompt to Gemini:", prompt);
+      
+        try {
+            const res = await fetch('http://localhost:3001/api/skill-recommendations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ skills: missingSkills })
+            });              
+      
+            const data = await res.json();
+            if (data.error) {
+              console.error("❌ Server error:", data.error);
+              output.innerHTML = `<p style="color:red;">❌ ${data.error}</p>`;
+              return;
+            }
+            
+            output.innerHTML = `<pre>${data.recommendations}</pre>`;            
+          console.log("📨 Gemini response:", data);
+
+          const recContainer = document.getElementById("recommendationsOutput");
+if (recContainer) {
+  recContainer.innerHTML = `<pre style="white-space:pre-wrap;">${data.text}</pre>`;
+} else {
+  console.warn("⚠️ #recommendationsOutput not found.");
+}
+
+      
+          if (data.error) {
+            console.error("❌ Gemini error:", data.error);
+            output.innerHTML = `<p style="color:red;">❌ ${data.error.message}</p>`;
+            return;
+          }
+      
+          const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "⚠️ No recommendations returned.";
+          output.innerHTML = `<pre>${text}</pre>`;
+        } catch (err) {
+          console.error("❌ Request failed:", err);
+          output.innerHTML = "<p style='color:red;'>❌ Error fetching recommendations.</p>";
+        }
+    }      
 
     getRequirementsByTitle(jobTitle) {
         const title = jobTitle.toLowerCase();
@@ -1261,34 +1310,77 @@ function saveDevelopmentPlan() {
 
 function waitForElement(id, callback, timeout = 3000) {
     const start = performance.now();
-  
+
     function check() {
-      const el = document.getElementById(id);
-      if (el) {
-        callback(el);
-      } else if (performance.now() - start < timeout) {
-        requestAnimationFrame(check);
-      } else {
-        console.warn(`⏱️ Timeout waiting for element #${id}`);
-      }
+        const el = document.getElementById(id);
+        if (el) {
+            callback(el);
+        } else if (performance.now() - start < timeout) {
+            requestAnimationFrame(check);
+        } else {
+            console.warn(`⏱️ Timeout waiting for element #${id}`);
+        }
     }
-  
+
     requestAnimationFrame(check);
-}  
+}
+
+function waitForElementWithText(selector, timeout = 3000) {
+    return new Promise((resolve, reject) => {
+        const start = Date.now();
+
+        function check() {
+            const el = document.querySelector(selector);
+            if (el && el.innerText.trim()) return resolve(el);
+            if (Date.now() - start >= timeout) return reject(`⏱️ Timeout waiting for non-empty ${selector}`);
+            requestAnimationFrame(check);
+        }
+
+        check();
+    });
+}
+
+const analyzer = new CareerGapAnalyzer();
 
 document.addEventListener("DOMContentLoaded", () => {
-    waitForElement("mustHaveSkills", () => {
-      console.log("✅ #mustHaveSkills is now in the DOM");
+    document.getElementById("mustHaveSkills").innerText = `
+  - JavaScript
+  - React
+  - REST APIs
+  - Node.js
+    `;
   
-      // Init CareerGapAnalyzer
-      window.careerGapAnalyzer = new CareerGapAnalyzer();
-  
-      // Hook up button only *after* the DOM is ready
-      const analyzeBtn = document.getElementById("analyzeTargetBtn");
-      if (analyzeBtn) {
-        analyzeBtn.addEventListener("click", () => {
-          window.careerGapAnalyzer.analyzeTargetJob();
-        });
-      }
+    document.getElementById("analyzeButton")?.addEventListener("click", () => {
+      analyzer.analyzeTargetJob();
     });
-  });  
+  
+    document.getElementById("recommendBtn")?.addEventListener("click", () => {
+      analyzer.generateSkillRecommendations();
+    });
+  });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     waitForElement("mustHaveSkills", () => {
+//         console.log("✅ #mustHaveSkills is now in the DOM");
+
+//         // Init CareerGapAnalyzer
+//         window.careerGapAnalyzer = new CareerGapAnalyzer();
+
+//         // Hook up button only *after* the DOM is ready
+//         const analyzeBtn = document.getElementById("analyzeTargetBtn");
+//         if (analyzeBtn) {
+//             analyzeBtn.addEventListener("click", () => {
+//                 window.careerGapAnalyzer.analyzeTargetJob();
+//             });
+//         }
+//     });
+// });
+
+// const analyzer = new CareerGapAnalyzer();
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   // This binds the click to the button
+//   document.getElementById("recommendBtn")?.addEventListener("click", () => {
+//     analyzer.generateSkillRecommendations();
+//   });
+// }); 
